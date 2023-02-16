@@ -48,10 +48,10 @@ class PostPagesTests(TestCase):
                 PROFILE_URL, kwargs={'username': self.user}
             ): 'posts/profile.html',
             reverse(
-                DETAIL_URL, kwargs={'post_id': self.post.pk}
+                DETAIL_URL, kwargs={'post_id': self.post.id}
             ): 'posts/post_detail.html',
             reverse(
-                EDIT_URL, kwargs={'post_id': self.post.pk}
+                EDIT_URL, kwargs={'post_id': self.post.id}
             ): 'posts/post_create.html',
             reverse(CREATE_URL): 'posts/post_create.html'
         }
@@ -106,14 +106,14 @@ class PostPagesTests(TestCase):
     def test_post_detail_correct(self):
         """Проверка detail.html"""
         response = self.authorized_client.get(
-            reverse(DETAIL_URL, kwargs={'post_id': self.post.pk})
+            reverse(DETAIL_URL, kwargs={'post_id': self.post.id})
         )
-        self.assertEqual(response.context.get('post').pk, self.post.pk)
+        self.assertEqual(response.context.get('post').id, self.post.id)
 
     def test_post_edit_corrct(self):
         """post_edit.html"""
         response = self.authorized_client.get(reverse(
-            EDIT_URL, kwargs={'post_id': self.post.pk}
+            EDIT_URL, kwargs={'post_id': self.post.id}
         ))
         self.assertIn('form', response.context)
         self.assertIsInstance(response.context.get('form'), PostForm)
