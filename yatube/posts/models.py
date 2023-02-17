@@ -1,8 +1,7 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth import get_user_model
 
-
-TEXT_NOMBER = 15
 
 User = get_user_model()
 
@@ -20,7 +19,7 @@ class Group(models.Model):
 
 class Post(models.Model):
     text = models.TextField(
-        'Текст поста',
+        verbose_name='Текст поста',
         help_text='Введите текст поста'
     )
     pub_date = models.DateTimeField(
@@ -45,7 +44,7 @@ class Post(models.Model):
     )
 
     def __str__(self):
-        return self.text[:TEXT_NOMBER]
+        return self.text[:settings.TEXT_NUMBER]
 
     class Meta:
         ordering = ['-pub_date']

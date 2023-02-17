@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
@@ -15,6 +16,7 @@ PROFILE_URL = 'posts:profile'
 DETAIL_URL = 'posts:post_detail'
 EDIT_URL = 'posts:post_edit'
 CREATE_URL = 'posts:post_create'
+PAGE_NOMBER = 3
 
 
 class PostPagesTests(TestCase):
@@ -138,14 +140,15 @@ class PaginatorViewsTest(TestCase):
             description='Тестовый текст',
             slug='test-slug'
         )
-        cls.post = [
-            Post.objects.create(
-                text=f'Тестовый текст {i}',
-                author=cls.user,
-                group=cls.group
-            )
-            for i in range(13)
-        ]
+        Post.objects.bulk_create(
+            [
+                Post(
+                    text=f'Тестовый текст {i}',
+                    author=cls.user,
+                    group=cls.group
+                )for i in range(settings.POSTS_NUMBER + PAGE_NOMBER)
+            ]
+        )
 
     def setUp(self):
         self.authorized_client = Client()
@@ -160,6 +163,9 @@ class PaginatorViewsTest(TestCase):
         for reverse_name in url_page_paginator:
             with self.subTest(reverse_name=reverse_name):
                 self.assertEqual(len(self.authorized_client.get(
-                    reverse_name).context.get('page_obj')), 10)
+                    reverse_name).context.get('page_obj')),
+                    settings.POSTS_NUMBER)
                 self.assertEqual(len(self.authorized_client.get(
-                    reverse_name + '?page=2').context.get('page_obj')), 3)
+                    reverse_name + '?page=2').context.get('page_obj')),
+                    PAGE_NOMBER
+                )

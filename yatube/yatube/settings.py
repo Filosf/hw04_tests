@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+
 import os
+
+TEXT_NUMBER = 15
+POSTS_NUMBER = 10
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +28,6 @@ SECRET_KEY = 'y^^9-+6hov(2=+u$8dd2^#h-nu4^nzbuz@nq6)icj@1ba++vw0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
