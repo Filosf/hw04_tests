@@ -3,6 +3,7 @@ from http import HTTPStatus
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.core.cache import cache
 
 from ..models import Group, Post
 
@@ -14,6 +15,7 @@ PROFILE_URL = 'posts:profile'
 EDIT_URL = 'posts:post_edit'
 CREATE_URL = 'posts:post_create'
 DETAIL_URL = 'posts:post_detail'
+FOLLOW_INDEX_URL = 'posts:follow_index'
 
 
 class PostURLTests(TestCase):
@@ -53,7 +55,8 @@ class PostURLTests(TestCase):
             )
         }
         cls.templates_url_names_prevate = {
-            'posts/post_create.html': reverse(CREATE_URL)
+            'posts/post_create.html': reverse(CREATE_URL),
+            'posts/follow.html': reverse(FOLLOW_INDEX_URL)
         }
         cls.templates_url_names = {
             'posts/index.html': reverse(INDEX_URL),
@@ -69,6 +72,7 @@ class PostURLTests(TestCase):
         }
 
     def setUp(self):
+        cache.clear()
         self.guest_client = Client()
         self.not_author_user = Client()
         self.not_author_user.force_login(self.not_user)

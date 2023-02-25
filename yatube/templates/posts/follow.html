@@ -3,8 +3,8 @@
 {% block title %}Последние обновления на сайте{% endblock %}
 {% cache 20 sidebar %}
 {% block content %}
-  {% include 'posts/includes/switcher.html' %}
   {% for post in page_obj %}
+  {% include 'posts/includes/switcher.html' %}
   {% include 'posts/includes/post_list.html' %}
     {% if post.group %}   
       <a href="{% url 'posts:group' post.group.slug %}">все записи группы</a>
