@@ -2,8 +2,13 @@
 <article>
   <ul>
     <li>
-      Автор: {{ post.author.get_full_name }} 
-      <a href="{% url 'posts:profile' post.author %}">все посты пользователя</a>
+      {% if post.author.get_full_name %}
+        Автор: {{ post.author.get_full_name }}
+        <a href="{% url 'posts:profile' post.author %}">все посты пользователя</a>
+      {% else%}
+        Автор {{ post.author.username }}
+        <a href="{% url 'posts:profile' post.author %}">все посты пользователя</a>
+      {% endif%}
     </li>
     <li>
       Дата публикации: {{ post.pub_date|date:"d E Y" }}

@@ -39,6 +39,9 @@
       <a class="btn btn-primary" href="{% url 'posts:post_edit' post_id=post.id %}">
         Редактировать запись
       </a>
+      <a class="btn btn-danger" href="{% url 'posts:post_delete' post_id=post.id %}">
+        Удалить запись
+      </a>
     {% endif %}
     {% include 'posts/includes/comments.html' %}
   </article>

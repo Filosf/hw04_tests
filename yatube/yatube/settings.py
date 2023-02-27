@@ -46,8 +46,10 @@ LOGIN_REDIRECT_URL = 'posts:index'
 # LOGOUT_REDIRECT_URL = 'posts:index'
 
 ALLOWED_HOSTS = [
-    'www.Filosfyatube.pythonanywhere.com',
-    'Filosfyatube.pythonanywhere.com',
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    'testserver',
 ]
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

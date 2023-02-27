@@ -1,4 +1,29 @@
 {% load user_filters %}
+<h4> Комментарии:</h4>
+{% if comments%}
+  {% for comment in comments %}
+    <div class="media mb-4">
+      <div class="media-body">
+        <h5 class="mt-0">
+          {% if comment.author.get_full_name %}
+            <a href="{% url 'posts:profile' comment.author.username %}">
+              {{ comment.author.get_full_name }}
+            </a>
+          {% else%}
+            <a href="{% url 'posts:profile' comment.author.username %}">
+              {{ comment.author.username }}
+            </a>
+          {% endif%}
+        </h5>
+        <p>
+          {{ comment.text }}
+        </p>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <h5>Комментариев еще нет...</h5>
+{% endif %}
 
 {% if user.is_authenticated %}
   <div class="card my-4">
@@ -14,18 +39,3 @@
     </div>
   </div>
 {% endif %}
-
-{% for comment in comments %}
-  <div class="media mb-4">
-    <div class="media-body">
-      <h5 class="mt-0">
-        <a href="{% url 'posts:profile' comment.author.username %}">
-          {{ comment.author.username }}
-        </a>
-      </h5>
-      <p>
-        {{ comment.text }}
-      </p>
-    </div>
-  </div>
-{% endfor %} 
